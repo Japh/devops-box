@@ -1,8 +1,8 @@
 #!/bin/bash
 set -x
 
-TERRAFORM_VERSION="0.7.13"
-PACKER_VERSION="0.10.2"
+TERRAFORM_VERSION="0.8.8"
+PACKER_VERSION="0.12.3"
 # create new ssh key
 [[ ! -f /home/ubuntu/.ssh/mykey ]] \
 && mkdir -p /home/ubuntu/.ssh \
@@ -11,16 +11,20 @@ PACKER_VERSION="0.10.2"
 
 # install packages
 apt-get update
-apt-get -y install docker.io ansible unzip
+apt-get -y install docker.io ansible unzip python-pip python3-minimal
 # add docker privileges
 usermod -G docker ubuntu
 # install pip
-pip install -U pip && pip3 install -U pip
-if [[ $? == 127 ]]; then
-    wget -q https://bootstrap.pypa.io/get-pip.py
-    python get-pip.py
-    python3 get-pip.py
-fi
+#pip install -U pip
+##pip install -U pip && pip3 install -U pip
+##if [[ $? == 127 ]]; then
+curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
+python get-pip.py
+python3 get-pip.py
+##    wget -q https://bootstrap.pypa.io/get-pip.py
+##    python get-pip.py
+##    python3 get-pip.py
+##fi
 # install awscli and ebcli
 pip install -U awscli
 pip install -U awsebcli
